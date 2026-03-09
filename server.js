@@ -66,6 +66,12 @@ wss.on('connection', (ws) => {
       if (!text) return;
       broadcast(currentRoom, { type: 'msg', user: currentUser, text }, ws);
 
+    } else if (data.type === 'img') {
+      if (!currentRoom) return;
+      const imgData = String(data.data || '');
+      if (!imgData) return;
+      broadcast(currentRoom, { type: 'img', user: currentUser, data: imgData }, ws);
+
     } else if (data.type === 'typing') {
       if (!currentRoom) return;
       broadcast(currentRoom, { type: 'typing', user: currentUser }, ws);
